@@ -1,0 +1,669 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d20">
+<title>For Duncan ♡ | Your Little World</title>
+
+<style>
+:root {
+  --night:#080d20;
+  --navy:#111a35;
+  --gold:#f2d18a;
+  --rose:#f0a9c0;
+  --cream:#fff3e5;
+  --muted:#c5c5d9;
+}
+* { box-sizing:border-box; }
+html,body {
+  margin:0; width:100%; height:100%;
+  overflow:hidden;
+}
+body {
+  background:var(--night); color:var(--cream);
+  font-family:Georgia,'Times New Roman',serif;
+}
+button { font:inherit; cursor:pointer; }
+button:focus-visible { outline:2px solid var(--gold); outline-offset:4px; }
+button:disabled { opacity:.5; cursor:default; }
+#stars,#floaties {
+  position:fixed; inset:0; pointer-events:none; overflow:hidden;
+}
+#stars {
+  background:
+    radial-gradient(1px 1px at 10% 20%,white 99%,transparent),
+    radial-gradient(2px 2px at 70% 18%,#ffe5a5 99%,transparent),
+    radial-gradient(1px 1px at 42% 65%,white 99%,transparent),
+    radial-gradient(2px 2px at 87% 78%,#f5c7dc 99%,transparent);
+  background-size:230px 190px;
+  animation:twinkle 5s ease-in-out infinite alternate;
+}
+@keyframes twinkle { to { opacity:.35; } }
+
+.scene {
+  position:fixed; inset:0; z-index:1;
+  display:none; align-items:center; justify-content:center;
+  padding:76px 20px 72px; overflow:hidden;
+  background:
+    radial-gradient(ellipse at 50% 0%,#24254b88,transparent 65%),
+    radial-gradient(ellipse at 10% 100%,#47254655,transparent 55%);
+}
+.scene.active { display:flex; animation:appear .55s ease both; }
+.scene-inner {
+  width:min(100%,680px); max-height:100%; overflow-y:auto;
+  scrollbar-width:thin; scrollbar-color:#665779 transparent;
+  text-align:center; padding:12px 5px 20px;
+}
+@keyframes appear {
+  from { opacity:0; transform:translateY(10px) scale(.985); }
+  to { opacity:1; transform:translateY(0) scale(1); }
+}
+.eyebrow {
+  color:var(--gold); font:10px Arial,sans-serif;
+  letter-spacing:.24em; text-transform:uppercase;
+}
+h1 { font-size:clamp(48px,11vw,86px); line-height:.95; font-weight:normal; margin:18px 0; }
+h1 span { color:var(--gold); }
+h2 { font-size:clamp(30px,7vw,48px); line-height:1.08; font-weight:normal; margin:12px 0 18px; }
+h3 { font-size:24px; font-weight:normal; }
+p { line-height:1.75; }
+.subtitle { color:var(--muted); max-width:490px; margin:0 auto 25px; line-height:1.75; }
+.gold { color:var(--gold); }
+.small { color:var(--muted); font:12px/1.7 Arial,sans-serif; }
+.btn {
+  border:1px solid #f2d18a88; color:var(--cream);
+  background:#ffffff0a; border-radius:999px;
+  padding:12px 19px; transition:transform .2s,background .2s;
+}
+.btn:hover { background:#f2d18a20; transform:translateY(-2px); }
+.btn.primary { background:var(--gold); color:#191327; border-color:var(--gold); }
+.btn-row { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:20px; }
+.top-controls {
+  position:fixed; top:14px; left:14px; right:14px; z-index:20;
+  display:flex; justify-content:space-between; align-items:center;
+  pointer-events:none;
+}
+.top-controls button { pointer-events:auto; }
+.pill {
+  background:#11172bcc; color:var(--gold);
+  border:1px solid #ffffff20; border-radius:99px;
+  padding:9px 13px; font:11px Arial,sans-serif;
+  backdrop-filter:blur(8px);
+}
+.music-toggle { position:fixed; right:14px; bottom:14px; z-index:25; }
+.music-toggle button { border-radius:50%; width:46px; height:46px; font-size:19px; }
+
+.portal {
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px; margin:28px auto 12px; max-width:510px;
+}
+.portal-card {
+  min-height:112px; padding:17px 10px;
+  border:1px solid #ffffff1a; border-radius:19px;
+  color:var(--cream); background:linear-gradient(145deg,#ffffff0c,#ffffff03);
+  transition:.25s; position:relative; overflow:hidden;
+}
+.portal-card:hover { transform:translateY(-4px); border-color:#f2d18a88; background:#ffffff12; }
+.portal-card .emoji { display:block; font-size:27px; margin-bottom:9px; }
+.portal-card strong { display:block; font-size:16px; font-weight:normal; }
+.portal-card small { display:block; color:var(--muted); font:10px Arial,sans-serif; margin-top:6px; }
+
+.floating-word {
+  position:absolute; border:0; border-radius:999px;
+  background:#ffffff0b; border:1px solid #ffffff21;
+  color:#f6cce0; padding:10px 14px;
+  animation:drift 5s ease-in-out infinite alternate;
+}
+@keyframes drift { to { transform:translateY(-12px) rotate(3deg); } }
+
+.bubble-field {
+  position:relative; width:min(100%,470px); height:300px;
+  margin:20px auto; overflow:hidden;
+}
+.bubble {
+  position:absolute; border:1px solid #ffffff65;
+  border-radius:50%; color:white;
+  background:radial-gradient(circle at 30% 25%,#ffffff9c,#efa5d344 45%,#bd88ef24);
+  box-shadow:inset -5px -8px 20px #b4a4ff18,0 0 22px #efadd322;
+  display:grid; place-items:center;
+  animation:bob 3s ease-in-out infinite alternate;
+  font-size:22px;
+}
+@keyframes bob { to { transform:translateY(-12px) translateX(4px); } }
+.bubble:active { transform:scale(.8); }
+.note-card {
+  border:1px solid #f2d18a55; background:#ffffff09;
+  border-radius:20px; padding:22px; margin:18px auto;
+  max-width:490px; box-shadow:0 12px 45px #0003;
+}
+.note-card p { margin:10px 0; }
+.jar {
+  width:145px; height:175px; margin:20px auto;
+  border:2px solid #b9d9ff99; border-top:8px solid #b9d9ffbb;
+  border-radius:24px 24px 35px 35px;
+  position:relative; cursor:pointer;
+  background:linear-gradient(120deg,#ffffff22,#b2c9ff08 40%,#d3a8ff1c);
+  box-shadow:inset 0 0 22px #c7dcff16,0 0 35px #9bbdff1a;
+  animation:jarFloat 3s ease-in-out infinite;
+}
+.jar:before {
+  content:""; position:absolute; top:-19px; left:34px;
+  width:72px; height:12px; border:2px solid #b9d9ff99;
+  border-radius:5px; background:#8296ba55;
+}
+.jar:after {
+  content:"✦  ♥  ✦"; position:absolute; top:50%; left:0; right:0;
+  color:var(--gold); font-size:25px;
+}
+@keyframes jarFloat { 50% { transform:translateY(-5px) rotate(1deg); } }
+.jar.shake { animation:shake .45s ease; }
+@keyframes shake {
+  20%,60% { transform:rotate(-6deg); }
+  40%,80% { transform:rotate(6deg); }
+}
+.envelope {
+  width:min(290px,75vw); height:185px; margin:20px auto;
+  position:relative; border:1px solid #e9c88e88;
+  border-radius:7px; background:linear-gradient(145deg,#f6e5c6,#c99c67);
+  color:#51361f; box-shadow:0 15px 60px #0005;
+  transition:transform .5s;
+}
+.envelope:before {
+  content:""; position:absolute; top:0; left:0; right:0; height:0;
+  border-left:144px solid transparent; border-right:144px solid transparent;
+  border-top:102px solid #f9e9d0; filter:drop-shadow(0 2px 1px #9a7147);
+}
+.envelope .seal {
+  position:absolute; z-index:2; left:50%; top:55%;
+  transform:translate(-50%,-50%); border-radius:50%;
+  width:45px; height:45px; display:grid; place-items:center;
+  background:#8d314c; color:#ffe4be; font-size:20px;
+  box-shadow:0 3px 10px #4d1c2b55;
+}
+.letter-paper {
+  text-align:left; color:#33251e; background:#f8eedc;
+  padding:24px clamp(18px,5vw,38px); border-radius:4px;
+  box-shadow:0 18px 50px #0004; line-height:1.85;
+  white-space:pre-wrap; font-size:15px;
+  max-height:52vh; overflow:auto;
+}
+.cursor {
+  display:inline-block; width:2px; height:1em;
+  background:#9b6b36; vertical-align:middle;
+  animation:blink .7s step-end infinite;
+}
+@keyframes blink { 50% { opacity:0; } }
+.quiz-options { display:grid; gap:10px; max-width:400px; margin:20px auto; }
+.quiz-options button { border-radius:13px; text-align:left; }
+#toast {
+  position:fixed; left:50%; bottom:76px; z-index:40;
+  transform:translate(-50%,15px); opacity:0; pointer-events:none;
+  padding:12px 18px; border-radius:14px; background:#211c35;
+  border:1px solid #f2d18a55; color:var(--cream);
+  transition:.25s; width:max-content; max-width:90vw;
+  font-size:14px; text-align:center;
+}
+#toast.show { opacity:1; transform:translate(-50%,0); }
+.heart-particle {
+  position:fixed; z-index:30; pointer-events:none;
+  animation:fly 1s ease-out forwards;
+}
+@keyframes fly {
+  from { opacity:1; transform:translate(0,0) scale(1); }
+  to { opacity:0; transform:translate(var(--dx),-110px) scale(.3); }
+}
+.spotify-box {
+  width:min(100%,380px); margin:22px auto;
+  border-radius:16px; overflow:hidden;
+}
+footer { color:#aeb1c9; font:10px Arial,sans-serif; letter-spacing:.1em; margin-top:22px; }
+@media(max-width:480px) {
+  .scene { padding:68px 16px 60px; }
+  .portal-card { min-height:100px; }
+  .bubble-field { height:265px; }
+  .letter-paper { font-size:14px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*:before,*:after { animation-duration:.01ms!important; transition-duration:.01ms!important; }
+}
+</style>
+</head>
+
+<body>
+<div id="stars"></div>
+<div id="floaties"></div>
+
+<div class="top-controls">
+  <button class="pill" id="homeButton" onclick="go('home')">♡ DUNCAN'S WORLD</button>
+  <button class="pill" onclick="showToast('You found your way back, handsome. ❤️')">A little surprise ✨</button>
+</div>
+<div class="music-toggle">
+  <button class="pill" onclick="go('music')" aria-label="Open music room">♫</button>
+</div>
+
+<!-- HOME -->
+<section class="scene active" id="home">
+  <div class="scene-inner">
+    <div class="eyebrow">A little world, made just for you</div>
+    <h1>Duncan<span>.</span>♡</h1>
+    <p class="subtitle">For the man who has given me moments worth keeping, even on the days he forgets how much he matters.</p>
+    <p class="gold">Somewhere in this little universe, there are things I want you to discover. ✨</p>
+
+    <div class="portal">
+      <button class="portal-card" onclick="go('bubbles')">
+        <span class="emoji">🫧</span><strong>Pop a little love</strong><small>Find the hidden messages</small>
+      </button>
+      <button class="portal-card" onclick="go('quiz')">
+        <span class="emoji">😂</span><strong>Our little quiz</strong><small>1 + 1 = ...?</small>
+      </button>
+      <button class="portal-card" onclick="go('starsRoom')">
+        <span class="emoji">🌌</span><strong>Our constellation</strong><small>Tap the stars</small>
+      </button>
+      <button class="portal-card" onclick="go('motivation')">
+        <span class="emoji">✨</span><strong>Your motivation jar</strong><small>A reminder for every kind of day</small>
+      </button>
+      <button class="portal-card" onclick="go('letter')">
+        <span class="emoji">💌</span><strong>A letter from your Darling</strong><small>Open when you're ready</small>
+      </button>
+      <button class="portal-card" onclick="go('music')">
+        <span class="emoji">🎶</span><strong>Our soundtrack</strong><small>A song for your heart</small>
+      </button>
+    </div>
+    <button class="floating-word" style="left:3%;top:28%" onclick="showToast('Your laugh. Your voice. Your heart. ❤️')">your laugh ♡</button>
+    <button class="floating-word" style="right:3%;top:30%;animation-delay:1s" onclick="showToast('1 + 1 = 22. Don't argue with mathematics. 😂')">1 + 1 = 22</button>
+    <button class="floating-word" style="left:7%;bottom:5%;animation-delay:2s" onclick="showToast('You are appreciated more than you know. ✨')">you matter ✨</button>
+    <footer>MADE WITH LOVE · FROM YOUR DARLING ❤️</footer>
+  </div>
+</section>
+
+<!-- BUBBLES -->
+<section class="scene" id="bubbles">
+  <div class="scene-inner">
+    <div class="eyebrow">A little game of discovery</div>
+    <h2>Pop a little love 🫧</h2>
+    <p class="subtitle">Every bubble is hiding something. Tap them and see what you find.</p>
+    <div class="bubble-field" id="bubbleField"></div>
+    <div class="note-card" id="bubbleMessage" hidden>
+      <p class="gold">A little message for you ♡</p>
+      <p id="bubbleText"></p>
+      <button class="btn" onclick="closeBubbleMessage()">Back to the bubbles</button>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="go('home')">Back to my world</button></div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="scene" id="quiz">
+  <div class="scene-inner">
+    <div class="eyebrow">An extremely serious test 😂</div>
+    <h2>How well do you know our story?</h2>
+    <p class="subtitle">Let's see whether you remember the little things.</p>
+    <div class="note-card">
+      <div class="small" id="quizProgress">QUESTION 1 OF 4</div>
+      <h3 id="quizQuestion">What is our legendary equation?</h3>
+      <div class="quiz-options" id="quizOptions"></div>
+      <p id="quizFeedback" aria-live="polite"></p>
+      <button class="btn" id="quizNext" onclick="nextQuestion()" hidden>Next question →</button>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="go('home')">Back to my world</button></div>
+  </div>
+</section>
+
+<!-- STARS -->
+<section class="scene" id="starsRoom">
+  <div class="scene-inner">
+    <div class="eyebrow">A little galaxy of memories</div>
+    <h2>Find your stars ✨</h2>
+    <p class="subtitle">Tap each star. Every one has something I want you to remember.</p>
+    <div class="bubble-field" id="starField"></div>
+    <div class="note-card" id="starMessage" hidden>
+      <p class="gold" id="starTitle"></p>
+      <p id="starText"></p>
+      <button class="btn" onclick="closeStarMessage()">Return to the stars</button>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="go('home')">Back to my world</button></div>
+  </div>
+</section>
+
+<!-- MOTIVATION JAR -->
+<section class="scene" id="motivation">
+  <div class="scene-inner">
+    <div class="eyebrow">For the days you need a reminder</div>
+    <h2>Your little jar of courage ✨</h2>
+    <p class="subtitle">You don't have to be at your strongest every day. Tap the jar and take a reminder with you.</p>
+    <button class="jar" id="jar" onclick="drawNote()" aria-label="Shake the motivation jar"></button>
+    <p class="small">TAP THE JAR TO DRAW A NOTE</p>
+    <div class="note-card" id="jarNote" hidden aria-live="polite">
+      <div class="gold">A LITTLE REMINDER FOR YOU</div>
+      <p id="jarText"></p>
+      <p class="small" id="jarCategory"></p>
+    </div>
+    <div class="btn-row">
+      <button class="btn primary" onclick="drawNote()">Give me a reminder ♡</button>
+      <button class="btn" onclick="go('home')">Back to my world</button>
+    </div>
+  </div>
+</section>
+
+<!-- LETTER -->
+<section class="scene" id="letter">
+  <div class="scene-inner">
+    <div class="eyebrow">A little piece of my heart</div>
+    <h2>A letter from your Darling 💌</h2>
+    <p class="subtitle" id="letterIntro">Take your time. This one's just for you.</p>
+    <button class="envelope" id="envelope" onclick="openLetter()">
+      <span class="seal">♥</span>
+    </button>
+    <div class="btn-row" id="letterButtons">
+      <button class="btn primary" onclick="openLetter()">Open my letter ♡</button>
+    </div>
+    <article class="letter-paper" id="letterPaper" hidden>
+      <span id="typedText"></span><span class="cursor" id="cursor"></span>
+    </article>
+    <div class="btn-row" id="letterAfter" hidden>
+      <button class="btn" onclick="restartLetter()">Read it again ↺</button>
+      <button class="btn" onclick="go('home')">Back to my world</button>
+    </div>
+  </div>
+</section>
+
+<!-- MUSIC -->
+<section class="scene" id="music">
+  <div class="scene-inner">
+    <div class="eyebrow">Our soundtrack ♡</div>
+    <h2>A song for this little world 🎶</h2>
+    <p class="subtitle">Some songs feel like they were waiting for two people to find each other. This one is a little reminder of what you mean to me. ❤️</p>
+    <div style="font-size:70px;animation:jarFloat 3s infinite">♫</div>
+    <div class="spotify-box">
+      <iframe
+        title="Our Spotify song"
+        src="https://open.spotify.com/embed/track/69vToJ9BMbbLlFZo7k7A7B?utm_source=generator"
+        width="100%" height="152" frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy" style="border-radius:16px">
+      </iframe>
+    </div>
+    <p class="small">If playback doesn't start here, tap the Spotify player to open and play the song.</p>
+    <p class="gold">Press play, think of us, and stay a little longer. ✨</p>
+    <div class="btn-row">
+      <button class="btn" onclick="go('home')">Back to my world</button>
+      <button class="btn primary" onclick="go('motivation')">A little encouragement ✨</button>
+    </div>
+  </div>
+</section>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+let toastTimer;
+function showToast(message) {
+  $('toast').textContent = message;
+  $('toast').classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => $('toast').classList.remove('show'), 3000);
+}
+function go(id) {
+  document.querySelectorAll('.scene').forEach(scene => scene.classList.remove('active'));
+  $(id).classList.add('active');
+  if (id === 'bubbles' && !$('bubbleField').children.length) buildBubbles();
+  if (id === 'starsRoom' && !$('starField').children.length) buildStars();
+  if (id === 'quiz') renderQuestion();
+  if (id === 'letter' && !letterStarted) $('letterIntro').textContent = 'Tap the envelope when you are ready. ❤️';
+}
+
+function heartBurst(x, y) {
+  for (let i=0; i<9; i++) {
+    const heart = document.createElement('span');
+    heart.className = 'heart-particle';
+    heart.textContent = ['♥','♡','✦','✨'][Math.floor(Math.random()*4)];
+    heart.style.left = x + 'px';
+    heart.style.top = y + 'px';
+    heart.style.color = ['#f2d18a','#f0a9c0','#ffffff'][i%3];
+    heart.style.setProperty('--dx', (Math.random()*150-75)+'px');
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 1100);
+  }
+}
+document.addEventListener('click', e => {
+  if (e.target.closest('button')) heartBurst(e.clientX, e.clientY);
+});
+
+/* Bubble game */
+const bubbleMessages = [
+  'Your laugh is one of those little things I could never get tired of. ❤️',
+  'You are more than what you earn, achieve, or manage to finish.',
+  'I notice the way you care, even when you think nobody notices.',
+  'Your voice, your chuckles and your teasing have become some of my favourite little things. 😂❤️',
+  'You deserve kindness on the days when you feel like you have nothing left to give.',
+  'Some people enter your life quietly and somehow become part of the moments your heart keeps replaying.',
+  'In case nobody has reminded you today: you are appreciated, Duncan. ✨',
+  '1 + 1 = 22. The mathematics department has officially confirmed it. 🤣❤️'
+];
+function buildBubbles() {
+  const field = $('bubbleField');
+  bubbleMessages.forEach((message, i) => {
+    const b = document.createElement('button');
+    b.className = 'bubble';
+    const size = 53 + (i%3)*14;
+    b.style.width = size+'px'; b.style.height = size+'px';
+    b.style.left = (5+(i*37)%82)+'%';
+    b.style.top = (5+(i*29)%75)+'%';
+    b.style.animationDelay = (i*.23)+'s';
+    b.textContent = ['♥','♡','✦','?','✨'][i%5];
+    b.setAttribute('aria-label','Pop a message bubble');
+    b.onclick = () => {
+      $('bubbleText').textContent = message;
+      $('bubbleMessage').hidden = false;
+      field.style.opacity = '.35';
+      showToast('POP! A little message just for you. 💗');
+    };
+    field.appendChild(b);
+  });
+}
+function closeBubbleMessage() {
+  $('bubbleMessage').hidden = true;
+  $('bubbleField').style.opacity = '1';
+}
+
+/* Quiz */
+const questions = [
+  {q:'What is our legendary equation?', a:['1 + 1 = 2','1 + 1 = 22','1 + 1 = 11'], correct:1, yes:'CORRECT! 😂❤️ Finally, a man who understands our mathematics.', no:'Not quite! In this universe, 1 + 1 = 22. Try again in your next lifetime. 😂'},
+  {q:'Where did our story begin?', a:['At church','At the supermarket','In a maths class'], correct:0, yes:'At church! Who knew a little hello could become a whole story? ❤️', no:'Think back to where we first met. 😉'},
+  {q:'What is one of my favourite little things about you?', a:['Your laugh and your voice','Your ability to disappear','Your terrible maths'], correct:0, yes:'Your laugh and voice, obviously. Though the maths is iconic. 😂❤️', no:'Hint: it is something I could listen to for a long time. ❤️'},
+  {q:'What should you remember on difficult days?', a:['That you must never rest','That your worth depends on money','That you matter, even while figuring life out'], correct:2, yes:'Exactly. You matter before, during and after every difficult season. ❤️', no:'Nope, handsome. Your worth isn't measured by a difficult season.'}
+];
+let quizIndex=0, quizScore=0, quizAnswered=false;
+function renderQuestion() {
+  const q = questions[quizIndex];
+  if (!q) return;
+  $('quizProgress').textContent = `QUESTION ${quizIndex+1} OF ${questions.length}`;
+  $('quizQuestion').textContent = q.q;
+  $('quizFeedback').textContent = '';
+  $('quizNext').hidden = true;
+  $('quizOptions').innerHTML = '';
+  quizAnswered = false;
+  q.a.forEach((answer, i) => {
+    const b = document.createElement('button');
+    b.className = 'btn'; b.textContent = answer;
+    b.onclick = () => answerQuestion(i);
+    $('quizOptions').appendChild(b);
+  });
+}
+function answerQuestion(i) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  const q = questions[quizIndex];
+  if (i === q.correct) quizScore++;
+  $('quizFeedback').textContent = i === q.correct ? q.yes : q.no;
+  $('quizOptions').querySelectorAll('button').forEach((b, n) => b.disabled = true);
+  $('quizNext').hidden = false;
+  $('quizNext').textContent = quizIndex === questions.length-1 ? 'See my result ♡' : 'Next question →';
+}
+function nextQuestion() {
+  if (quizIndex < questions.length-1) {
+    quizIndex++; renderQuestion();
+  } else {
+    $('quizQuestion').textContent = `You got ${quizScore} out of ${questions.length}! ❤️`;
+    $('quizProgress').textContent = 'THE OFFICIAL RESULTS';
+    $('quizOptions').innerHTML = '';
+    $('quizFeedback').textContent = quizScore === questions.length
+      ? 'Perfect score! You know this little world. Now accept your prize: unlimited bragging rights. 😂❤️'
+      : 'Your prize is still the same: a little reminder that you are appreciated, Duncan. ❤️';
+    $('quizNext').hidden = true;
+    const b = document.createElement('button');
+    b.className = 'btn primary'; b.textContent = 'Play again';
+    b.onclick = () => { quizIndex=0; quizScore=0; renderQuestion(); };
+    $('quizOptions').appendChild(b);
+  }
+}
+
+/* Stars */
+const starData = [
+  ['The first hello','We met at church, and I could never have guessed how many little moments would follow that first meeting. ❤️'],
+  ['1 + 1 = 22','Somewhere between the teasing and the laughter, you gave us a joke I will probably never let you forget. 😂'],
+  ['The man behind the music','You are not just a DJ. You are a dreamer, a creator, a hard worker, and a man with a beautiful heart. Your talent and passion matter.'],
+  ['The little things','Your chuckles, your sweet voice, your check-ins, and the way you notice when my mood changes — I carry those little things in my heart.'],
+  ['A reminder for you','A hard season is a chapter, not the whole story. There is still more ahead of you than this difficult moment lets you imagine.']
+];
+function buildStars() {
+  const field = $('starField');
+  starData.forEach((data, i) => {
+    const b = document.createElement('button');
+    b.className = 'bubble';
+    const size = 50+(i%3)*12;
+    b.style.width=size+'px'; b.style.height=size+'px';
+    b.style.left=(6+(i*21)%82)+'%';
+    b.style.top=(8+(i*31)%72)+'%';
+    b.style.color='#f2d18a'; b.style.background='radial-gradient(circle,#fff7c655,#f2d18a0c)';
+    b.style.boxShadow='0 0 30px #f2d18a33';
+    b.style.animationDelay=(i*.3)+'s';
+    b.textContent='✦';
+    b.setAttribute('aria-label',data[0]);
+    b.onclick=()=>{
+      $('starTitle').textContent=data[0];
+      $('starText').textContent=data[1];
+      $('starMessage').hidden=false; field.style.opacity='.3';
+    };
+    field.appendChild(b);
+  });
+}
+function closeStarMessage() {
+  $('starMessage').hidden=true; $('starField').style.opacity='1';
+}
+
+/* Motivation jar */
+const jarNotes = [
+  ['COURAGE','You are allowed to have difficult seasons without deciding that your whole story is a failure.'],
+  ['YOUR WORTH','Your struggles do not cancel your worth. You are still valuable on the days when your plans do not work.'],
+  ['PATIENCE',"You're not a failure for not having it all figured out. Keep going at your own pace."],
+  ['REST','Resting is not giving up. Sometimes the bravest thing you can do is pause, breathe, and begin again when you are ready.'],
+  ['STRENGTH',"Asking for support doesn't make you less of a man. You don't have to carry everything alone."],
+  ['HOPE','Better days are still possible. Your story is still being written, even when this chapter feels difficult.'],
+  ['A LITTLE FAITH','You do not need to see the whole road to take the next step. One day, one prayer, one moment at a time.'],
+  ['YOUR HEART','I hope you give yourself the same kindness you so freely give to the people you care about.'],
+  ['REMEMBER THIS','You are more than your current income. Your value is not in what you make, but in who you are.'],
+  ['A DARLING REMINDER','Excuse me, sir. Who gave you permission to forget how amazing you are? Please report to the encouragement department immediately. 😂❤️'],
+  ['KEEP GOING','You have overcome so much already. You do not have to solve everything today. Just take the next small step.'],
+  ['YOU MATTER','You do not have to be strong every second. You are allowed to feel, to rest, and to let someone stand beside you.'],
+  ['THE MAN YOU ARE','I see your dedication to music, your dreams, your effort, and the heart you bring to what you do. Please do not overlook yourself.'],
+  ['ONE MORE THING','You are not alone. I see you — the real you. The man who tries, who feels, who overthinks, who carries so much and still shows up. ❤️']
+];
+let lastNote = -1;
+function drawNote() {
+  const jar = $('jar');
+  jar.classList.remove('shake');
+  void jar.offsetWidth;
+  jar.classList.add('shake');
+  let n;
+  do { n=Math.floor(Math.random()*jarNotes.length); } while (n===lastNote && jarNotes.length>1);
+  lastNote=n;
+  setTimeout(()=>{
+    $('jarText').textContent=jarNotes[n][1];
+    $('jarCategory').textContent=jarNotes[n][0];
+    $('jarNote').hidden=false;
+    heartBurst(window.innerWidth/2,window.innerHeight/2);
+  },220);
+}
+
+/* Typewriter letter */
+const letterText = `Duncan, ❤️
+
+I don't know if you always realize how much you mean to me, so I wanted to make you something that says it properly.
+
+I see the man who checks up on me, who wants to know I've reached safely, who can hear me out when something has hurt me and say sorry when he's wrong. I see the man who stayed with me on a night when grief felt too heavy, who gave me space to feel, and who has encouraged me on days when I wasn't okay. Those things might feel small to you, but they aren't small to me. I carry them in my heart.
+
+And I want you to know that I see you, too — not just the version of you who is trying to make everything work, provide, achieve, and figure life out. I see you beyond the money, beyond the setbacks, beyond the pressure you put on yourself. You are still you on the days when the plans don't work. You are still worthy on the days when you feel behind. Your value has never been a number in your account or a list of things you've managed to accomplish.
+
+I wish you could see yourself with a little of the kindness you give to the people you care about. You don't have to be strong every second. You don't have to have every answer today. You can take a breath, regroup, ask for help, and try again when you're ready. A hard season is a chapter, not the whole story.
+
+I'm not writing this because I expect you to have everything figured out, or because I need you to be okay all the time. I'm writing it because you matter to me. I want you to feel seen, appreciated, and less alone. I want you to remember that you don't have to hide every difficult feeling or carry every worry by yourself.
+
+Thank you for the care you've shown me, for the laughter, for the check-ins, for making sure I get home safely, and for being willing to own it when something goes wrong between us. Thank you for being someone I can see beyond the surface. And thank you for being Duncan — not a perfect person, not a person who never struggles, but a person who means a great deal to me.
+
+So, please, be gentle with yourself. Keep going at your own pace. Let people stand beside you, too. And on the days you forget what you bring to this world, I hope you remember that I see you. I believe there is still more ahead of you than this difficult moment lets you imagine.
+
+You are not alone in this. You matter to me, more than I probably manage to say.
+
+With all my love,
+Your Darling ❤️`;
+
+let letterStarted=false, typingTimer=null, letterIndex=0;
+function openLetter() {
+  if (letterStarted) return;
+  letterStarted=true;
+  $('envelope').style.transform='translateY(-10px) rotate(-2deg) scale(.96)';
+  $('letterButtons').hidden=true;
+  $('letterPaper').hidden=false;
+  $('letterAfter').hidden=true;
+  $('letterIntro').textContent='A little patience, handsome. Let me say it properly. ❤️';
+  $('typedText').textContent='';
+  letterIndex=0;
+  typeLetter();
+}
+function typeLetter() {
+  clearTimeout(typingTimer);
+  if (letterIndex >= letterText.length) {
+    $('cursor').hidden=true;
+    $('letterAfter').hidden=false;
+    $('letterIntro').textContent='Every word, from my heart to yours. ❤️';
+    return;
+  }
+  $('typedText').textContent += letterText.charAt(letterIndex);
+  const ch=letterText.charAt(letterIndex++);
+  const paper=$('letterPaper');
+  paper.scrollTop=paper.scrollHeight;
+  let delay=27;
+  if (ch==='.' || ch==='!' || ch==='?') delay=330;
+  else if (ch===',' || ch==='—') delay=160;
+  else if (ch==='\n') delay=210;
+  typingTimer=setTimeout(typeLetter,delay);
+}
+function restartLetter() {
+  clearTimeout(typingTimer);
+  letterStarted=false;
+  $('letterPaper').hidden=true;
+  $('letterAfter').hidden=true;
+  $('letterButtons').hidden=false;
+  $('cursor').hidden=false;
+  $('envelope').style.transform='';
+  $('letterIntro').textContent='Tap the envelope when you are ready. ❤️';
+  $('typedText').textContent='';
+}
+
+/* Ambient floating symbols */
+const floaties=$('floaties');
+function addFloaty() {
+  const el=document.createElement('span');
+  el.textContent=['♡','✦','♥','·'][Math.floor(Math.random()*4)];
+  el.style.cssText=`position:absolute;left:${Math.random()*100}%;bottom:-30px;color:${Math.random()>.5?'#f2d18a':'#f0a9c0'};font-size:${12+Math.random()*17}px;opacity:.5;transition:transform 9s linear,opacity 9s linear;`;
+  floaties.appendChild(el);
+  requestAnimationFrame(()=>{el.style.transform=`translateY(-${window.innerHeight+60}px) rotate(${Math.random()*140}deg)`;el.style.opacity='0';});
+  setTimeout(()=>el.remove(),9200);
+}
+setInterval(addFloaty,1000);
+</script>
+</body>
+</html>
