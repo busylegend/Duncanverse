@@ -4,594 +4,814 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080d20">
-<title>For Duncan ♡ | Your Little World</title>
+<meta name="theme-color" content="#10152b">
+<title>22 ✨ | A Little World for Duncan</title>
 
 <style>
 :root {
-  --night:#080d20;
-  --navy:#111a35;
-  --gold:#f2d18a;
-  --rose:#f0a9c0;
-  --cream:#fff3e5;
-  --muted:#c5c5d9;
+  --night: #10152b;
+  --deep: #080c1c;
+  --gold: #e8c982;
+  --cream: #fff5df;
+  --muted: #c4c4d5;
+  --panel: rgba(255,255,255,.055);
+  --line: rgba(232,201,130,.25);
 }
-* { box-sizing:border-box; }
-html,body {
-  margin:0; width:100%; height:100%;
-  overflow:hidden;
-}
+* { box-sizing: border-box; }
 body {
-  background:var(--night); color:var(--cream);
-  font-family:Georgia,'Times New Roman',serif;
+  margin: 0;
+  background: var(--night);
+  color: var(--cream);
+  font-family: Georgia, "Times New Roman", serif;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
-button { font:inherit; cursor:pointer; }
-button:focus-visible { outline:2px solid var(--gold); outline-offset:4px; }
-button:disabled { opacity:.5; cursor:default; }
-#stars,#floaties {
-  position:fixed; inset:0; pointer-events:none; overflow:hidden;
-}
-#stars {
-  background:
-    radial-gradient(1px 1px at 10% 20%,white 99%,transparent),
-    radial-gradient(2px 2px at 70% 18%,#ffe5a5 99%,transparent),
-    radial-gradient(1px 1px at 42% 65%,white 99%,transparent),
-    radial-gradient(2px 2px at 87% 78%,#f5c7dc 99%,transparent);
-  background-size:230px 190px;
-  animation:twinkle 5s ease-in-out infinite alternate;
-}
-@keyframes twinkle { to { opacity:.35; } }
+button { font: inherit; cursor: pointer; }
+button:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+button:disabled { opacity: .6; cursor: default; }
+.hidden { display: none !important; }
 
-.scene {
-  position:fixed; inset:0; z-index:1;
-  display:none; align-items:center; justify-content:center;
-  padding:76px 20px 72px; overflow:hidden;
+#sky {
+  position: fixed; inset: 0; overflow: hidden;
+  pointer-events: none; z-index: 0;
+}
+.spark {
+  position: absolute; border-radius: 50%;
+  background: #fff4c9; box-shadow: 0 0 9px #f8dda0;
+  animation: twinkle var(--duration,3s) ease-in-out infinite alternate;
+}
+@keyframes twinkle {
+  from { opacity: .2; transform: scale(.7); }
+  to { opacity: 1; transform: scale(1.35); }
+}
+
+/* THE OPENING DOORS */
+#entrance {
+  position: fixed; z-index: 20; inset: 0;
+  display: grid; place-items: center; overflow: hidden;
   background:
-    radial-gradient(ellipse at 50% 0%,#24254b88,transparent 65%),
-    radial-gradient(ellipse at 10% 100%,#47254655,transparent 55%);
+    radial-gradient(ellipse at 50% 48%,rgba(218,171,84,.16),transparent 48%),
+    linear-gradient(160deg,#151b36,#070a17 75%);
+  transition: opacity 1.1s ease, visibility 1.1s ease;
 }
-.scene.active { display:flex; animation:appear .55s ease both; }
-.scene-inner {
-  width:min(100%,680px); max-height:100%; overflow-y:auto;
-  scrollbar-width:thin; scrollbar-color:#665779 transparent;
-  text-align:center; padding:12px 5px 20px;
-}
-@keyframes appear {
-  from { opacity:0; transform:translateY(10px) scale(.985); }
-  to { opacity:1; transform:translateY(0) scale(1); }
+#entrance.leaving { opacity: 0; visibility: hidden; pointer-events: none; }
+.entrance-content {
+  width: min(92%,600px); text-align: center;
+  padding: 24px 0; position: relative; z-index: 2;
 }
 .eyebrow {
-  color:var(--gold); font:10px Arial,sans-serif;
-  letter-spacing:.24em; text-transform:uppercase;
+  color: var(--gold); text-transform: uppercase;
+  letter-spacing: .22em; font: 11px Arial,sans-serif; line-height: 1.8;
 }
-h1 { font-size:clamp(48px,11vw,86px); line-height:.95; font-weight:normal; margin:18px 0; }
-h1 span { color:var(--gold); }
-h2 { font-size:clamp(30px,7vw,48px); line-height:1.08; font-weight:normal; margin:12px 0 18px; }
-h3 { font-size:24px; font-weight:normal; }
-p { line-height:1.75; }
-.subtitle { color:var(--muted); max-width:490px; margin:0 auto 25px; line-height:1.75; }
-.gold { color:var(--gold); }
-.small { color:var(--muted); font:12px/1.7 Arial,sans-serif; }
-.btn {
-  border:1px solid #f2d18a88; color:var(--cream);
-  background:#ffffff0a; border-radius:999px;
-  padding:12px 19px; transition:transform .2s,background .2s;
+.entrance-title {
+  font-size: clamp(30px,6vw,49px); font-weight: normal;
+  line-height: 1.18; margin: 16px 0;
+  text-shadow: 0 0 30px rgba(232,201,130,.16);
 }
-.btn:hover { background:#f2d18a20; transform:translateY(-2px); }
-.btn.primary { background:var(--gold); color:#191327; border-color:var(--gold); }
-.btn-row { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:20px; }
-.top-controls {
-  position:fixed; top:14px; left:14px; right:14px; z-index:20;
-  display:flex; justify-content:space-between; align-items:center;
-  pointer-events:none;
+.entrance-subtitle {
+  color: var(--muted); font-size: 16px; font-style: italic;
+  line-height: 1.8; padding: 0 10px;
 }
-.top-controls button { pointer-events:auto; }
-.pill {
-  background:#11172bcc; color:var(--gold);
-  border:1px solid #ffffff20; border-radius:99px;
-  padding:9px 13px; font:11px Arial,sans-serif;
-  backdrop-filter:blur(8px);
+.doorway {
+  position: relative; width: min(78vw,300px);
+  height: min(40vh,330px); min-height: 205px;
+  margin: 28px auto 25px; perspective: 1000px;
+  filter: drop-shadow(0 0 25px rgba(232,201,130,.12));
 }
-.music-toggle { position:fixed; right:14px; bottom:14px; z-index:25; }
-.music-toggle button { border-radius:50%; width:46px; height:46px; font-size:19px; }
+.door-glow {
+  position: absolute; inset: 12px 20px;
+  background: #ffe7a5;
+  box-shadow: 0 0 40px 20px rgba(255,207,112,.48),
+              0 0 100px 35px rgba(240,178,73,.25);
+  opacity: .4; transition: opacity 2s ease;
+}
+.door-frame {
+  position: absolute; inset: 0; display: flex;
+  border: 7px solid #bd9854; outline: 2px solid rgba(255,232,170,.6);
+  outline-offset: 5px; background: #080c1c; overflow: hidden;
+}
+.door {
+  position: relative; width: 50%; height: 100%;
+  background:
+    repeating-linear-gradient(90deg,transparent 0 28px,rgba(0,0,0,.15) 29px 32px),
+    linear-gradient(90deg,#222b49,#121a32 70%,#26304c);
+  border: 2px solid #a77f3e;
+  transition: transform 2s cubic-bezier(.65,0,.2,1);
+  transform-style: preserve-3d;
+}
+.door.left { transform-origin: left center; border-right: 3px solid #d6b46e; }
+.door.right { transform-origin: right center; border-left: 3px solid #d6b46e; }
+.door::before {
+  content: "✦"; position: absolute; inset: 15% 0; margin: auto;
+  width: 100%; height: 40px; text-align: center; font-size: 35px;
+  color: var(--gold); text-shadow: 0 0 15px #e7c16b;
+}
+.door::after {
+  content: ""; position: absolute; top: 12%; bottom: 12%;
+  left: 12%; right: 12%; border: 1px solid rgba(232,201,130,.45);
+}
+.door-handle {
+  position: absolute; top: 55%; width: 9px; height: 9px;
+  border-radius: 50%; background: #ffe4a1;
+  box-shadow: 0 0 12px #e8c982; z-index: 2;
+}
+.left .door-handle { right: 10px; }
+.right .door-handle { left: 10px; }
+#entrance.opening .door.left { transform: rotateY(-110deg); }
+#entrance.opening .door.right { transform: rotateY(110deg); }
+#entrance.opening .door-glow { opacity: 1; }
 
-.portal {
-  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px; margin:28px auto 12px; max-width:510px;
+.gold-button,.soft-button,.back-button {
+  border: 1px solid var(--gold); border-radius: 999px;
+  padding: 13px 25px; transition: transform .2s,background .2s,box-shadow .2s;
 }
-.portal-card {
-  min-height:112px; padding:17px 10px;
-  border:1px solid #ffffff1a; border-radius:19px;
-  color:var(--cream); background:linear-gradient(145deg,#ffffff0c,#ffffff03);
-  transition:.25s; position:relative; overflow:hidden;
+.gold-button {
+  color: #171326; background: linear-gradient(135deg,#f6dfaa,#c69a4b);
+  box-shadow: 0 0 25px rgba(232,201,130,.15);
 }
-.portal-card:hover { transform:translateY(-4px); border-color:#f2d18a88; background:#ffffff12; }
-.portal-card .emoji { display:block; font-size:27px; margin-bottom:9px; }
-.portal-card strong { display:block; font-size:16px; font-weight:normal; }
-.portal-card small { display:block; color:var(--muted); font:10px Arial,sans-serif; margin-top:6px; }
+.gold-button:hover,.soft-button:hover,.back-button:hover {
+  transform: translateY(-2px); box-shadow: 0 0 22px rgba(232,201,130,.2);
+}
+.soft-button,.back-button { background: rgba(255,255,255,.04); color: var(--cream); }
 
-.floating-word {
-  position:absolute; border:0; border-radius:999px;
-  background:#ffffff0b; border:1px solid #ffffff21;
-  color:#f6cce0; padding:10px 14px;
-  animation:drift 5s ease-in-out infinite alternate;
+/* MAIN WEBSITE */
+main {
+  position: relative; z-index: 1; width: min(100%,900px);
+  margin: 0 auto; padding: 25px 18px 45px;
 }
-@keyframes drift { to { transform:translateY(-12px) rotate(3deg); } }
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-bottom: 24px;
+}
+.brand { font-size: 25px; color: var(--gold); letter-spacing: .06em; }
+.tiny-note {
+  font: 11px Arial,sans-serif; color: var(--muted);
+  text-align: right; letter-spacing: .06em;
+}
+.scene { display: none; animation: sceneIn .65s ease both; }
+.scene.active { display: block; }
+@keyframes sceneIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero {
+  min-height: 42vh; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+  padding: 30px 10px 42px;
+}
+.moon { font-size: 46px; color: var(--gold); text-shadow: 0 0 30px rgba(232,201,130,.55); }
+h1,h2,h3,p { overflow-wrap: anywhere; }
+.hero h1 {
+  font-size: clamp(40px,9vw,70px); font-weight: normal;
+  margin: 5px 0 15px; letter-spacing: .08em;
+}
+.hero p {
+  color: var(--muted); max-width: 510px; line-height: 1.9;
+  font-size: 16px; margin: 0 auto 22px;
+}
+.small-label {
+  color: var(--gold); font: 11px Arial,sans-serif;
+  text-transform: uppercase; letter-spacing: .2em; margin-bottom: 10px;
+}
+.section-heading { text-align: center; margin: 12px 0 22px; }
+.section-heading h2 {
+  font-weight: normal; font-size: clamp(26px,6vw,36px);
+  color: var(--gold); margin: 7px 0 12px;
+}
+.section-heading p {
+  color: var(--muted); line-height: 1.8; font-size: 14px;
+  max-width: 560px; margin: 0 auto;
+}
+.tile-grid {
+  display: grid; grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 12px; margin: 10px 0 30px;
+}
+.tile {
+  color: var(--cream); cursor: pointer; text-align: left; min-height: 130px;
+  border: 1px solid var(--line);
+  background: linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.018));
+  border-radius: 17px; padding: 17px 15px;
+  transition: border-color .2s,transform .2s,background .2s;
+}
+.tile:hover {
+  border-color: var(--gold); transform: translateY(-3px);
+  background: rgba(232,201,130,.075);
+}
+.tile .emoji { font-size: 26px; display: block; margin-bottom: 11px; }
+.tile strong { font-size: 16px; font-weight: normal; }
+.tile small {
+  display: block; color: var(--muted); font: 12px Arial,sans-serif;
+  line-height: 1.6; margin-top: 6px;
+}
+.card {
+  border: 1px solid var(--line); background: var(--panel);
+  border-radius: 20px; padding: clamp(18px,5vw,30px);
+  margin: 14px 0 24px; box-shadow: 0 15px 45px rgba(0,0,0,.1);
+}
+.body-copy { color: #e7e4ef; line-height: 1.95; font-size: 16px; }
+.body-copy p { margin: 0 0 16px; }
+.scene-controls {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  justify-content: center; margin: 25px 0 8px;
+}
+.back-button { padding: 11px 20px; }
+.fine-print {
+  color: #9296ad; text-align: center; font: 11px Arial,sans-serif;
+  line-height: 1.8; margin: 28px 0 8px;
+}
 
+/* BUBBLE GAME */
 .bubble-field {
-  position:relative; width:min(100%,470px); height:300px;
-  margin:20px auto; overflow:hidden;
+  position: relative; min-height: 300px; border: 1px solid var(--line);
+  border-radius: 18px; overflow: hidden;
+  background: radial-gradient(ellipse at center,rgba(80,95,155,.14),transparent 75%);
 }
 .bubble {
-  position:absolute; border:1px solid #ffffff65;
-  border-radius:50%; color:white;
-  background:radial-gradient(circle at 30% 25%,#ffffff9c,#efa5d344 45%,#bd88ef24);
-  box-shadow:inset -5px -8px 20px #b4a4ff18,0 0 22px #efadd322;
-  display:grid; place-items:center;
-  animation:bob 3s ease-in-out infinite alternate;
-  font-size:22px;
+  position: absolute; display: grid; place-items: center;
+  border: 1px solid rgba(255,255,255,.7); border-radius: 50%;
+  cursor: pointer;
+  background: radial-gradient(circle at 30% 25%,rgba(255,255,255,.85),rgba(181,170,245,.28) 40%,rgba(232,201,130,.16));
+  box-shadow: inset -5px -7px 15px rgba(180,170,255,.1),0 0 16px rgba(230,218,255,.12);
+  animation: bob 3s ease-in-out infinite alternate;
 }
-@keyframes bob { to { transform:translateY(-12px) translateX(4px); } }
-.bubble:active { transform:scale(.8); }
-.note-card {
-  border:1px solid #f2d18a55; background:#ffffff09;
-  border-radius:20px; padding:22px; margin:18px auto;
-  max-width:490px; box-shadow:0 12px 45px #0003;
+@keyframes bob { to { margin-top: -12px; } }
+.score { text-align: center; color: var(--gold); margin: 15px 0; }
+
+/* QUIZ */
+.quiz-option {
+  display: block; width: 100%; text-align: left;
+  border: 1px solid var(--line); background: rgba(255,255,255,.035);
+  color: var(--cream); border-radius: 12px; padding: 14px;
+  margin: 9px 0; cursor: pointer; line-height: 1.5;
 }
-.note-card p { margin:10px 0; }
+.quiz-option:hover { border-color: var(--gold); }
+.quiz-option.correct { border-color: #9dcba7; background: rgba(110,180,130,.12); }
+.quiz-option.wrong { border-color: #c58a8a; background: rgba(180,90,90,.1); }
+
+/* STARS */
+.constellation {
+  display: grid; grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 14px; padding: 15px 0;
+}
+.star {
+  min-height: 115px; border: 1px solid rgba(232,201,130,.15);
+  background: rgba(255,255,255,.025); color: var(--gold);
+  border-radius: 16px; font-size: 30px; cursor: pointer;
+  transition: background .3s,transform .3s;
+}
+.star span { display: block; color: var(--muted); font: 11px Arial,sans-serif; margin-top: 8px; }
+.star.revealed { background: rgba(232,201,130,.12); box-shadow: 0 0 25px rgba(232,201,130,.12); }
+
+/* MOTIVATION JAR */
+.jar-wrap { text-align: center; padding: 10px 0 18px; }
 .jar {
-  width:145px; height:175px; margin:20px auto;
-  border:2px solid #b9d9ff99; border-top:8px solid #b9d9ffbb;
-  border-radius:24px 24px 35px 35px;
-  position:relative; cursor:pointer;
-  background:linear-gradient(120deg,#ffffff22,#b2c9ff08 40%,#d3a8ff1c);
-  box-shadow:inset 0 0 22px #c7dcff16,0 0 35px #9bbdff1a;
-  animation:jarFloat 3s ease-in-out infinite;
+  font-size: 100px; display: block; margin: 10px auto;
+  background: transparent; border: none; cursor: pointer;
+  filter: drop-shadow(0 0 20px rgba(232,201,130,.16)); transition: transform .25s;
 }
-.jar:before {
-  content:""; position:absolute; top:-19px; left:34px;
-  width:72px; height:12px; border:2px solid #b9d9ff99;
-  border-radius:5px; background:#8296ba55;
+.jar:hover { transform: rotate(-5deg) scale(1.05); }
+.jar:active { transform: scale(.93); }
+.note-paper {
+  background: #f6e8c6; color: #282139; padding: 22px;
+  border-radius: 5px 18px 5px 18px; line-height: 1.8;
+  max-width: 460px; min-height: 110px; margin: 18px auto;
+  box-shadow: 0 12px 30px rgba(0,0,0,.15);
+  transform: rotate(-1deg); display: grid; place-items: center; font-size: 17px;
 }
-.jar:after {
-  content:"✦  ♥  ✦"; position:absolute; top:50%; left:0; right:0;
-  color:var(--gold); font-size:25px;
-}
-@keyframes jarFloat { 50% { transform:translateY(-5px) rotate(1deg); } }
-.jar.shake { animation:shake .45s ease; }
-@keyframes shake {
-  20%,60% { transform:rotate(-6deg); }
-  40%,80% { transform:rotate(6deg); }
-}
-.envelope {
-  width:min(290px,75vw); height:185px; margin:20px auto;
-  position:relative; border:1px solid #e9c88e88;
-  border-radius:7px; background:linear-gradient(145deg,#f6e5c6,#c99c67);
-  color:#51361f; box-shadow:0 15px 60px #0005;
-  transition:transform .5s;
-}
-.envelope:before {
-  content:""; position:absolute; top:0; left:0; right:0; height:0;
-  border-left:144px solid transparent; border-right:144px solid transparent;
-  border-top:102px solid #f9e9d0; filter:drop-shadow(0 2px 1px #9a7147);
-}
-.envelope .seal {
-  position:absolute; z-index:2; left:50%; top:55%;
-  transform:translate(-50%,-50%); border-radius:50%;
-  width:45px; height:45px; display:grid; place-items:center;
-  background:#8d314c; color:#ffe4be; font-size:20px;
-  box-shadow:0 3px 10px #4d1c2b55;
-}
+.jar-instruction { color: var(--muted); font-size: 13px; }
+
+/* LETTER */
+.envelope { text-align: center; padding: 10px 0 20px; }
+.envelope-icon { font-size: 70px; display: block; margin: 12px 0; }
 .letter-paper {
-  text-align:left; color:#33251e; background:#f8eedc;
-  padding:24px clamp(18px,5vw,38px); border-radius:4px;
-  box-shadow:0 18px 50px #0004; line-height:1.85;
-  white-space:pre-wrap; font-size:15px;
-  max-height:52vh; overflow:auto;
+  background: #fbf0d9; color: #292239;
+  padding: clamp(18px,5vw,34px); border-radius: 4px;
+  box-shadow: 0 15px 40px rgba(0,0,0,.15);
+  line-height: 1.95; font-size: 16px; white-space: pre-wrap;
+  overflow-wrap: anywhere; min-height: 180px;
 }
+#letterText { white-space: pre-wrap; }
 .cursor {
-  display:inline-block; width:2px; height:1em;
-  background:#9b6b36; vertical-align:middle;
-  animation:blink .7s step-end infinite;
+  display: inline-block; width: 2px; height: 1.1em;
+  background: #8b7443; vertical-align: middle;
+  animation: blink .8s steps(1) infinite;
 }
-@keyframes blink { 50% { opacity:0; } }
-.quiz-options { display:grid; gap:10px; max-width:400px; margin:20px auto; }
-.quiz-options button { border-radius:13px; text-align:left; }
-#toast {
-  position:fixed; left:50%; bottom:76px; z-index:40;
-  transform:translate(-50%,15px); opacity:0; pointer-events:none;
-  padding:12px 18px; border-radius:14px; background:#211c35;
-  border:1px solid #f2d18a55; color:var(--cream);
-  transition:.25s; width:max-content; max-width:90vw;
-  font-size:14px; text-align:center;
+@keyframes blink { 50% { opacity: 0; } }
+
+/* MUSIC */
+.music-disc { font-size: 74px; text-align: center; margin: 12px 0; }
+.spotify-frame {
+  width: 100%; height: 152px; border: 0;
+  border-radius: 13px; margin-top: 12px; background: #161b2d;
 }
-#toast.show { opacity:1; transform:translate(-50%,0); }
-.heart-particle {
-  position:fixed; z-index:30; pointer-events:none;
-  animation:fly 1s ease-out forwards;
+footer { color: #999bb1; font-size: 12px; line-height: 1.9; text-align: center; padding: 28px 0 5px; }
+footer span { color: var(--gold); }
+
+@media (min-width:680px) {
+  .tile-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  main { padding-top: 34px; }
 }
-@keyframes fly {
-  from { opacity:1; transform:translate(0,0) scale(1); }
-  to { opacity:0; transform:translate(var(--dx),-110px) scale(.3); }
+@media (max-width:380px) {
+  .tile-grid { gap: 8px; }
+  .tile { padding: 13px 11px; min-height: 125px; }
+  .tile strong { font-size: 14px; }
+  .constellation { gap: 8px; }
+  .star { min-height: 100px; }
 }
-.spotify-box {
-  width:min(100%,380px); margin:22px auto;
-  border-radius:16px; overflow:hidden;
-}
-footer { color:#aeb1c9; font:10px Arial,sans-serif; letter-spacing:.1em; margin-top:22px; }
-@media(max-width:480px) {
-  .scene { padding:68px 16px 60px; }
-  .portal-card { min-height:100px; }
-  .bubble-field { height:265px; }
-  .letter-paper { font-size:14px; }
-}
-@media(prefers-reduced-motion:reduce) {
-  *,*:before,*:after { animation-duration:.01ms!important; transition-duration:.01ms!important; }
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
 }
 </style>
 </head>
 
 <body>
-<div id="stars"></div>
-<div id="floaties"></div>
+<div id="sky" aria-hidden="true"></div>
 
-<div class="top-controls">
-  <button class="pill" id="homeButton" onclick="go('home')">♡ DUNCAN'S WORLD</button>
-  <button class="pill" onclick="showToast('You found your way back, handsome. ❤️')">A little surprise ✨</button>
-</div>
-<div class="music-toggle">
-  <button class="pill" onclick="go('music')" aria-label="Open music room">♫</button>
-</div>
+<!-- THE ENTRANCE -->
+<section id="entrance" aria-label="Welcome to 22">
+  <div class="entrance-content">
+    <div class="eyebrow">A little world made just for you</div>
+    <h1 class="entrance-title">Something special<br>awaits…</h1>
+    <p class="entrance-subtitle">Some doors lead to places.<br>Others lead to feelings. ♡</p>
 
-<!-- HOME -->
-<section class="scene active" id="home">
-  <div class="scene-inner">
-    <div class="eyebrow">A little world, made just for you</div>
-    <h1>Duncan<span>.</span>♡</h1>
-    <p class="subtitle">For the man who has given me moments worth keeping, even on the days he forgets how much he matters.</p>
-    <p class="gold">Somewhere in this little universe, there are things I want you to discover. ✨</p>
-
-    <div class="portal">
-      <button class="portal-card" onclick="go('bubbles')">
-        <span class="emoji">🫧</span><strong>Pop a little love</strong><small>Find the hidden messages</small>
-      </button>
-      <button class="portal-card" onclick="go('quiz')">
-        <span class="emoji">😂</span><strong>Our little quiz</strong><small>1 + 1 = ...?</small>
-      </button>
-      <button class="portal-card" onclick="go('starsRoom')">
-        <span class="emoji">🌌</span><strong>Our constellation</strong><small>Tap the stars</small>
-      </button>
-      <button class="portal-card" onclick="go('motivation')">
-        <span class="emoji">✨</span><strong>Your motivation jar</strong><small>A reminder for every kind of day</small>
-      </button>
-      <button class="portal-card" onclick="go('letter')">
-        <span class="emoji">💌</span><strong>A letter from your Darling</strong><small>Open when you're ready</small>
-      </button>
-      <button class="portal-card" onclick="go('music')">
-        <span class="emoji">🎶</span><strong>Our soundtrack</strong><small>A song for your heart</small>
-      </button>
+    <div class="doorway" aria-hidden="true">
+      <div class="door-glow"></div>
+      <div class="door-frame">
+        <div class="door left"><span class="door-handle"></span></div>
+        <div class="door right"><span class="door-handle"></span></div>
+      </div>
     </div>
-    <button class="floating-word" style="left:3%;top:28%" onclick="showToast('Your laugh. Your voice. Your heart. ❤️')">your laugh ♡</button>
-    <button class="floating-word" style="right:3%;top:30%;animation-delay:1s" onclick="showToast('1 + 1 = 22. Don't argue with mathematics. 😂')">1 + 1 = 22</button>
-    <button class="floating-word" style="left:7%;bottom:5%;animation-delay:2s" onclick="showToast('You are appreciated more than you know. ✨')">you matter ✨</button>
-    <footer>MADE WITH LOVE · FROM YOUR DARLING ❤️</footer>
+
+    <button class="gold-button" id="enterButton" type="button">Enter My World ✨</button>
+    <p class="fine-print">Made with care, a little madness, and lots of heart.</p>
   </div>
 </section>
 
-<!-- BUBBLES -->
-<section class="scene" id="bubbles">
-  <div class="scene-inner">
-    <div class="eyebrow">A little game of discovery</div>
-    <h2>Pop a little love 🫧</h2>
-    <p class="subtitle">Every bubble is hiding something. Tap them and see what you find.</p>
-    <div class="bubble-field" id="bubbleField"></div>
-    <div class="note-card" id="bubbleMessage" hidden>
-      <p class="gold">A little message for you ♡</p>
-      <p id="bubbleText"></p>
-      <button class="btn" onclick="closeBubbleMessage()">Back to the bubbles</button>
-    </div>
-    <div class="btn-row"><button class="btn" onclick="go('home')">Back to my world</button></div>
-  </div>
-</section>
+<main id="world" class="hidden">
+  <header class="topbar">
+    <div class="brand">22 <span>✧</span></div>
+    <div class="tiny-note">A LITTLE UNIVERSE<br>MADE JUST FOR YOU</div>
+  </header>
 
-<!-- QUIZ -->
-<section class="scene" id="quiz">
-  <div class="scene-inner">
-    <div class="eyebrow">An extremely serious test 😂</div>
-    <h2>How well do you know our story?</h2>
-    <p class="subtitle">Let's see whether you remember the little things.</p>
-    <div class="note-card">
-      <div class="small" id="quizProgress">QUESTION 1 OF 4</div>
-      <h3 id="quizQuestion">What is our legendary equation?</h3>
-      <div class="quiz-options" id="quizOptions"></div>
-      <p id="quizFeedback" aria-live="polite"></p>
-      <button class="btn" id="quizNext" onclick="nextQuestion()" hidden>Next question →</button>
+  <!-- HOME -->
+  <section id="home" class="scene active">
+    <div class="hero">
+      <div class="moon">✦</div>
+      <div class="small-label">Welcome to your little universe</div>
+      <h1>22</h1>
+      <p>Made of little memories, laughter, quiet encouragement, music, and words I sometimes struggle to say out loud. A little place in this big world, made just for you. ♡</p>
+      <button class="gold-button" data-scene="memories">Let's Explore ✨</button>
     </div>
-    <div class="btn-row"><button class="btn" onclick="go('home')">Back to my world</button></div>
-  </div>
-</section>
 
-<!-- STARS -->
-<section class="scene" id="starsRoom">
-  <div class="scene-inner">
-    <div class="eyebrow">A little galaxy of memories</div>
-    <h2>Find your stars ✨</h2>
-    <p class="subtitle">Tap each star. Every one has something I want you to remember.</p>
-    <div class="bubble-field" id="starField"></div>
-    <div class="note-card" id="starMessage" hidden>
-      <p class="gold" id="starTitle"></p>
-      <p id="starText"></p>
-      <button class="btn" onclick="closeStarMessage()">Return to the stars</button>
+    <div class="section-heading">
+      <div class="small-label">Choose your adventure</div>
+      <h2>Where would you like to go?</h2>
+      <p>Every little corner holds something for you.</p>
     </div>
-    <div class="btn-row"><button class="btn" onclick="go('home')">Back to my world</button></div>
-  </div>
-</section>
 
-<!-- MOTIVATION JAR -->
-<section class="scene" id="motivation">
-  <div class="scene-inner">
-    <div class="eyebrow">For the days you need a reminder</div>
-    <h2>Your little jar of courage ✨</h2>
-    <p class="subtitle">You don't have to be at your strongest every day. Tap the jar and take a reminder with you.</p>
-    <button class="jar" id="jar" onclick="drawNote()" aria-label="Shake the motivation jar"></button>
-    <p class="small">TAP THE JAR TO DRAW A NOTE</p>
-    <div class="note-card" id="jarNote" hidden aria-live="polite">
-      <div class="gold">A LITTLE REMINDER FOR YOU</div>
-      <p id="jarText"></p>
-      <p class="small" id="jarCategory"></p>
+    <div class="tile-grid">
+      <button class="tile" data-scene="memories"><span class="emoji">💫</span><strong>Our Memories</strong><small>Little moments my heart keeps.</small></button>
+      <button class="tile" data-scene="bubbles"><span class="emoji">🫧</span><strong>Bubble Trouble</strong><small>A little fun, just because.</small></button>
+      <button class="tile" data-scene="quiz"><span class="emoji">❤️</span><strong>Our Little Quiz</strong><small>Let's see what you remember.</small></button>
+      <button class="tile" data-scene="stars"><span class="emoji">🌟</span><strong>Our Stars</strong><small>Tap a star to discover a thought.</small></button>
+      <button class="tile" data-scene="motivation"><span class="emoji">🫙</span><strong>Motivation Jar</strong><small>A little reminder for harder days.</small></button>
+      <button class="tile" data-scene="music"><span class="emoji">🎵</span><strong>Our Soundtrack</strong><small>A song for a little moment.</small></button>
+      <button class="tile" data-scene="letter"><span class="emoji">💌</span><strong>A Letter for You</strong><small>Some words from your Darling.</small></button>
     </div>
-    <div class="btn-row">
-      <button class="btn primary" onclick="drawNote()">Give me a reminder ♡</button>
-      <button class="btn" onclick="go('home')">Back to my world</button>
-    </div>
-  </div>
-</section>
 
-<!-- LETTER -->
-<section class="scene" id="letter">
-  <div class="scene-inner">
-    <div class="eyebrow">A little piece of my heart</div>
-    <h2>A letter from your Darling 💌</h2>
-    <p class="subtitle" id="letterIntro">Take your time. This one's just for you.</p>
-    <button class="envelope" id="envelope" onclick="openLetter()">
-      <span class="seal">♥</span>
-    </button>
-    <div class="btn-row" id="letterButtons">
-      <button class="btn primary" onclick="openLetter()">Open my letter ♡</button>
+    <div class="card body-copy">
+      <p>Some people enter your life quietly, and somehow, without asking permission, they become part of the little moments your heart keeps replaying.</p>
+      <p>And somewhere in our story, there was a church, a little laughter, and one unforgettable equation: <strong>1 + 1 = 22.</strong> 🤭</p>
     </div>
-    <article class="letter-paper" id="letterPaper" hidden>
-      <span id="typedText"></span><span class="cursor" id="cursor"></span>
-    </article>
-    <div class="btn-row" id="letterAfter" hidden>
-      <button class="btn" onclick="restartLetter()">Read it again ↺</button>
-      <button class="btn" onclick="go('home')">Back to my world</button>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- MUSIC -->
-<section class="scene" id="music">
-  <div class="scene-inner">
-    <div class="eyebrow">Our soundtrack ♡</div>
-    <h2>A song for this little world 🎶</h2>
-    <p class="subtitle">Some songs feel like they were waiting for two people to find each other. This one is a little reminder of what you mean to me. ❤️</p>
-    <div style="font-size:70px;animation:jarFloat 3s infinite">♫</div>
-    <div class="spotify-box">
-      <iframe
-        title="Our Spotify song"
+  <!-- MEMORIES -->
+  <section id="memories" class="scene">
+    <div class="section-heading">
+      <div class="small-label">The little things</div>
+      <h2>Our Memories 💫</h2>
+      <p>Some moments are small when they happen, then become precious when you look back.</p>
+    </div>
+    <div class="card body-copy">
+      <p>I still smile when I think about how we first crossed paths at church. I didn't know that such an ordinary moment would become something my heart would keep revisiting.</p>
+      <p>And then there was that legendary equation — <strong>1 + 1 = 22.</strong> 😂 It still makes me smile because sometimes the most memorable things are the ones nobody planned.</p>
+      <p>I appreciate the way you check up on me, want to know I've reached safely, notice when my mood changes, and make room for me to speak honestly. I appreciate your chuckles, your voice, your teasing, and the little moments that have become special to me.</p>
+      <p>I remember the night grief felt especially heavy and you stayed on the phone with me. You gave me room to feel what I was feeling instead of expecting me to pretend I was okay. That mattered.</p>
+      <p>This isn't about needing every moment to be perfect. It's about noticing the little things that make a connection meaningful. Some moments become memories before we even realise it. ♡</p>
+    </div>
+    <div class="scene-controls">
+      <button class="back-button" data-scene="home">← Back to My World</button>
+      <button class="gold-button" data-scene="letter">Read My Letter 💌</button>
+    </div>
+  </section>
+
+  <!-- BUBBLE GAME -->
+  <section id="bubbles" class="scene">
+    <div class="section-heading">
+      <div class="small-label">A little break</div>
+      <h2>Bubble Trouble 🫧</h2>
+      <p>Pop the bubbles and collect a little happiness. Tap as many as you can!</p>
+    </div>
+    <div class="score">Bubbles popped: <strong id="bubbleScore">0</strong></div>
+    <div class="bubble-field" id="bubbleField" aria-label="Bubble popping game"></div>
+    <div class="scene-controls">
+      <button class="soft-button" id="newBubbles">Make More Bubbles ✨</button>
+      <button class="back-button" data-scene="home">← Back Home</button>
+    </div>
+    <p class="fine-print">A tiny reminder that you're allowed to have fun, too.</p>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="scene">
+    <div class="section-heading">
+      <div class="small-label">Let's test your memory</div>
+      <h2>Our Little Quiz ❤️</h2>
+      <p>Just for fun. No pressure, no exams, and definitely no grades. 😂</p>
+    </div>
+    <div class="card">
+      <div id="quizContent"></div>
+      <p id="quizFeedback" class="body-copy" aria-live="polite"></p>
+      <div class="scene-controls">
+        <button class="gold-button hidden" id="nextQuestion">Next Question →</button>
+        <button class="soft-button hidden" id="restartQuiz">Play Again ↻</button>
+        <button class="back-button" data-scene="home">← Back Home</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- STARS -->
+  <section id="stars" class="scene">
+    <div class="section-heading">
+      <div class="small-label">A little light for you</div>
+      <h2>Our Stars 🌟</h2>
+      <p>Tap each star to uncover a reminder. Some things deserve to be said more than once.</p>
+    </div>
+    <div class="constellation" id="constellation"></div>
+    <div class="card body-copy">
+      <p id="starMessage" aria-live="polite" style="text-align:center;margin:0">Choose a star, and let it tell you something worth remembering. ✨</p>
+    </div>
+    <div class="scene-controls"><button class="back-button" data-scene="home">← Back Home</button></div>
+  </section>
+
+  <!-- MOTIVATION JAR -->
+  <section id="motivation" class="scene">
+    <div class="section-heading">
+      <div class="small-label">For the days that feel heavy</div>
+      <h2>Your Motivation Jar 🫙</h2>
+      <p>When you need a little reminder, reach in and take a note. You don't have to figure everything out today.</p>
+    </div>
+    <div class="card jar-wrap">
+      <button class="jar" id="drawNote" aria-label="Pick an encouraging note from the jar">🫙</button>
+      <p class="jar-instruction">Tap the jar to pick a little reminder.</p>
+      <div class="note-paper" id="motivationNote" aria-live="polite">There's a note in here with your name on it. ♡</div>
+      <button class="gold-button" id="anotherNote">Give Me Another ✨</button>
+    </div>
+    <div class="card body-copy">
+      <p>This is for the days you feel stuck, tired, or like you're not doing enough. When everything feels like it's falling apart, I want you to remember this:</p>
+      <p>You are allowed to have difficult seasons without deciding that your whole story is a failure. Your struggles don't cancel your worth. You're not a failure for not having it all figured out.</p>
+      <p>Resting isn't giving up. Asking for support doesn't make you less of a man. You have overcome so much already. Better days are still possible. You don't have to carry everything alone.</p>
+    </div>
+    <div class="scene-controls"><button class="back-button" data-scene="home">← Back Home</button></div>
+  </section>
+
+  <!-- MUSIC -->
+  <section id="music" class="scene">
+    <div class="section-heading">
+      <div class="small-label">Press play and stay a little</div>
+      <h2>Our Soundtrack ♡</h2>
+      <p>Some songs feel like they were waiting for two people to find them. This one is a little reminder of what you mean to me. ❤️</p>
+    </div>
+    <div class="card">
+      <div class="music-disc">🎵</div>
+      <div class="body-copy" style="text-align:center">
+        <p>For a quiet moment, a smile, or whenever you feel like listening.</p>
+        <p><em>Press play, think of us, and stay a little longer. ✨</em></p>
+      </div>
+      <iframe class="spotify-frame" title="Our Spotify soundtrack"
         src="https://open.spotify.com/embed/track/69vToJ9BMbbLlFZo7k7A7B?utm_source=generator"
-        width="100%" height="152" frameborder="0"
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy" style="border-radius:16px">
-      </iframe>
+        loading="lazy"></iframe>
+      <p class="fine-print">Spotify may ask you to open the song in its app or sign in.</p>
     </div>
-    <p class="small">If playback doesn't start here, tap the Spotify player to open and play the song.</p>
-    <p class="gold">Press play, think of us, and stay a little longer. ✨</p>
-    <div class="btn-row">
-      <button class="btn" onclick="go('home')">Back to my world</button>
-      <button class="btn primary" onclick="go('motivation')">A little encouragement ✨</button>
-    </div>
-  </div>
-</section>
+    <div class="scene-controls"><button class="back-button" data-scene="home">← Back Home</button></div>
+  </section>
 
-<div id="toast" role="status" aria-live="polite"></div>
+  <!-- LETTER -->
+  <section id="letter" class="scene">
+    <div class="section-heading">
+      <div class="small-label">A little something from me</div>
+      <h2>A Letter for You 💌</h2>
+      <p>Take your time with this one.</p>
+    </div>
+    <div class="card">
+      <div class="envelope" id="envelope">
+        <span class="envelope-icon">💌</span>
+        <p class="body-copy" style="text-align:center">There's something I've wanted to tell you properly.</p>
+        <button class="gold-button" id="openLetter">Open Your Letter ♡</button>
+      </div>
+      <div id="letterPaper" class="letter-paper hidden">
+        <span id="letterText"></span><span id="typeCursor" class="cursor"></span>
+      </div>
+      <div class="scene-controls">
+        <button class="soft-button hidden" id="replayLetter">Read It Again ↻</button>
+        <button class="back-button" data-scene="home">← Back Home</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Made with <span>♡</span>, a little madness, and so much care.</p>
+    <p>Whatever today looks like, please remember: your story is still being written.</p>
+    <p>— Your Darling ❤️</p>
+  </footer>
+</main>
 
 <script>
-const $ = id => document.getElementById(id);
-let toastTimer;
-function showToast(message) {
-  $('toast').textContent = message;
-  $('toast').classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => $('toast').classList.remove('show'), 3000);
-}
-function go(id) {
-  document.querySelectorAll('.scene').forEach(scene => scene.classList.remove('active'));
-  $(id).classList.add('active');
-  if (id === 'bubbles' && !$('bubbleField').children.length) buildBubbles();
-  if (id === 'starsRoom' && !$('starField').children.length) buildStars();
-  if (id === 'quiz') renderQuestion();
-  if (id === 'letter' && !letterStarted) $('letterIntro').textContent = 'Tap the envelope when you are ready. ❤️';
-}
+(() => {
+  "use strict";
 
-function heartBurst(x, y) {
-  for (let i=0; i<9; i++) {
-    const heart = document.createElement('span');
-    heart.className = 'heart-particle';
-    heart.textContent = ['♥','♡','✦','✨'][Math.floor(Math.random()*4)];
-    heart.style.left = x + 'px';
-    heart.style.top = y + 'px';
-    heart.style.color = ['#f2d18a','#f0a9c0','#ffffff'][i%3];
-    heart.style.setProperty('--dx', (Math.random()*150-75)+'px');
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 1100);
+  const $ = (selector, parent = document) => parent.querySelector(selector);
+  const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
+
+  // Twinkling stars in the background
+  const sky = $("#sky");
+  for (let i = 0; i < 65; i++) {
+    const star = document.createElement("i");
+    star.className = "spark";
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 100 + "%";
+    const size = 1 + Math.random() * 2.5;
+    star.style.width = size + "px";
+    star.style.height = size + "px";
+    star.style.setProperty("--duration", (2 + Math.random() * 4) + "s");
+    star.style.animationDelay = Math.random() * 4 + "s";
+    sky.appendChild(star);
   }
-}
-document.addEventListener('click', e => {
-  if (e.target.closest('button')) heartBurst(e.clientX, e.clientY);
-});
 
-/* Bubble game */
-const bubbleMessages = [
-  'Your laugh is one of those little things I could never get tired of. ❤️',
-  'You are more than what you earn, achieve, or manage to finish.',
-  'I notice the way you care, even when you think nobody notices.',
-  'Your voice, your chuckles and your teasing have become some of my favourite little things. 😂❤️',
-  'You deserve kindness on the days when you feel like you have nothing left to give.',
-  'Some people enter your life quietly and somehow become part of the moments your heart keeps replaying.',
-  'In case nobody has reminded you today: you are appreciated, Duncan. ✨',
-  '1 + 1 = 22. The mathematics department has officially confirmed it. 🤣❤️'
-];
-function buildBubbles() {
-  const field = $('bubbleField');
-  bubbleMessages.forEach((message, i) => {
-    const b = document.createElement('button');
-    b.className = 'bubble';
-    const size = 53 + (i%3)*14;
-    b.style.width = size+'px'; b.style.height = size+'px';
-    b.style.left = (5+(i*37)%82)+'%';
-    b.style.top = (5+(i*29)%75)+'%';
-    b.style.animationDelay = (i*.23)+'s';
-    b.textContent = ['♥','♡','✦','?','✨'][i%5];
-    b.setAttribute('aria-label','Pop a message bubble');
-    b.onclick = () => {
-      $('bubbleText').textContent = message;
-      $('bubbleMessage').hidden = false;
-      field.style.opacity = '.35';
-      showToast('POP! A little message just for you. 💗');
-    };
-    field.appendChild(b);
-  });
-}
-function closeBubbleMessage() {
-  $('bubbleMessage').hidden = true;
-  $('bubbleField').style.opacity = '1';
-}
+  // Door entrance
+  const entrance = $("#entrance");
+  const world = $("#world");
+  let entered = false;
 
-/* Quiz */
-const questions = [
-  {q:'What is our legendary equation?', a:['1 + 1 = 2','1 + 1 = 22','1 + 1 = 11'], correct:1, yes:'CORRECT! 😂❤️ Finally, a man who understands our mathematics.', no:'Not quite! In this universe, 1 + 1 = 22. Try again in your next lifetime. 😂'},
-  {q:'Where did our story begin?', a:['At church','At the supermarket','In a maths class'], correct:0, yes:'At church! Who knew a little hello could become a whole story? ❤️', no:'Think back to where we first met. 😉'},
-  {q:'What is one of my favourite little things about you?', a:['Your laugh and your voice','Your ability to disappear','Your terrible maths'], correct:0, yes:'Your laugh and voice, obviously. Though the maths is iconic. 😂❤️', no:'Hint: it is something I could listen to for a long time. ❤️'},
-  {q:'What should you remember on difficult days?', a:['That you must never rest','That your worth depends on money','That you matter, even while figuring life out'], correct:2, yes:'Exactly. You matter before, during and after every difficult season. ❤️', no:'Nope, handsome. Your worth isn't measured by a difficult season.'}
-];
-let quizIndex=0, quizScore=0, quizAnswered=false;
-function renderQuestion() {
-  const q = questions[quizIndex];
-  if (!q) return;
-  $('quizProgress').textContent = `QUESTION ${quizIndex+1} OF ${questions.length}`;
-  $('quizQuestion').textContent = q.q;
-  $('quizFeedback').textContent = '';
-  $('quizNext').hidden = true;
-  $('quizOptions').innerHTML = '';
-  quizAnswered = false;
-  q.a.forEach((answer, i) => {
-    const b = document.createElement('button');
-    b.className = 'btn'; b.textContent = answer;
-    b.onclick = () => answerQuestion(i);
-    $('quizOptions').appendChild(b);
+  $("#enterButton").addEventListener("click", () => {
+    if (entered) return;
+    entered = true;
+    $("#enterButton").disabled = true;
+    entrance.classList.add("opening");
+
+    window.setTimeout(() => {
+      world.classList.remove("hidden");
+      entrance.classList.add("leaving");
+      window.setTimeout(() => {
+        entrance.style.display = "none";
+      }, 1200);
+    }, 1600);
   });
-}
-function answerQuestion(i) {
-  if (quizAnswered) return;
-  quizAnswered = true;
-  const q = questions[quizIndex];
-  if (i === q.correct) quizScore++;
-  $('quizFeedback').textContent = i === q.correct ? q.yes : q.no;
-  $('quizOptions').querySelectorAll('button').forEach((b, n) => b.disabled = true);
-  $('quizNext').hidden = false;
-  $('quizNext').textContent = quizIndex === questions.length-1 ? 'See my result ♡' : 'Next question →';
-}
-function nextQuestion() {
-  if (quizIndex < questions.length-1) {
-    quizIndex++; renderQuestion();
-  } else {
-    $('quizQuestion').textContent = `You got ${quizScore} out of ${questions.length}! ❤️`;
-    $('quizProgress').textContent = 'THE OFFICIAL RESULTS';
-    $('quizOptions').innerHTML = '';
-    $('quizFeedback').textContent = quizScore === questions.length
-      ? 'Perfect score! You know this little world. Now accept your prize: unlimited bragging rights. 😂❤️'
-      : 'Your prize is still the same: a little reminder that you are appreciated, Duncan. ❤️';
-    $('quizNext').hidden = true;
-    const b = document.createElement('button');
-    b.className = 'btn primary'; b.textContent = 'Play again';
-    b.onclick = () => { quizIndex=0; quizScore=0; renderQuestion(); };
-    $('quizOptions').appendChild(b);
+
+  // Navigation: all segment buttons use the same working function
+  function showScene(id) {
+    const target = document.getElementById(id);
+    if (!target || !target.classList.contains("scene")) return;
+
+    $$(".scene").forEach(scene => scene.classList.remove("active"));
+    target.classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    if (id === "bubbles" && bubbleField.children.length === 0) makeBubbles();
   }
-}
 
-/* Stars */
-const starData = [
-  ['The first hello','We met at church, and I could never have guessed how many little moments would follow that first meeting. ❤️'],
-  ['1 + 1 = 22','Somewhere between the teasing and the laughter, you gave us a joke I will probably never let you forget. 😂'],
-  ['The man behind the music','You are not just a DJ. You are a dreamer, a creator, a hard worker, and a man with a beautiful heart. Your talent and passion matter.'],
-  ['The little things','Your chuckles, your sweet voice, your check-ins, and the way you notice when my mood changes — I carry those little things in my heart.'],
-  ['A reminder for you','A hard season is a chapter, not the whole story. There is still more ahead of you than this difficult moment lets you imagine.']
-];
-function buildStars() {
-  const field = $('starField');
-  starData.forEach((data, i) => {
-    const b = document.createElement('button');
-    b.className = 'bubble';
-    const size = 50+(i%3)*12;
-    b.style.width=size+'px'; b.style.height=size+'px';
-    b.style.left=(6+(i*21)%82)+'%';
-    b.style.top=(8+(i*31)%72)+'%';
-    b.style.color='#f2d18a'; b.style.background='radial-gradient(circle,#fff7c655,#f2d18a0c)';
-    b.style.boxShadow='0 0 30px #f2d18a33';
-    b.style.animationDelay=(i*.3)+'s';
-    b.textContent='✦';
-    b.setAttribute('aria-label',data[0]);
-    b.onclick=()=>{
-      $('starTitle').textContent=data[0];
-      $('starText').textContent=data[1];
-      $('starMessage').hidden=false; field.style.opacity='.3';
-    };
-    field.appendChild(b);
+  document.addEventListener("click", event => {
+    const button = event.target.closest("[data-scene]");
+    if (button) showScene(button.dataset.scene);
   });
-}
-function closeStarMessage() {
-  $('starMessage').hidden=true; $('starField').style.opacity='1';
-}
 
-/* Motivation jar */
-const jarNotes = [
-  ['COURAGE','You are allowed to have difficult seasons without deciding that your whole story is a failure.'],
-  ['YOUR WORTH','Your struggles do not cancel your worth. You are still valuable on the days when your plans do not work.'],
-  ['PATIENCE',"You're not a failure for not having it all figured out. Keep going at your own pace."],
-  ['REST','Resting is not giving up. Sometimes the bravest thing you can do is pause, breathe, and begin again when you are ready.'],
-  ['STRENGTH',"Asking for support doesn't make you less of a man. You don't have to carry everything alone."],
-  ['HOPE','Better days are still possible. Your story is still being written, even when this chapter feels difficult.'],
-  ['A LITTLE FAITH','You do not need to see the whole road to take the next step. One day, one prayer, one moment at a time.'],
-  ['YOUR HEART','I hope you give yourself the same kindness you so freely give to the people you care about.'],
-  ['REMEMBER THIS','You are more than your current income. Your value is not in what you make, but in who you are.'],
-  ['A DARLING REMINDER','Excuse me, sir. Who gave you permission to forget how amazing you are? Please report to the encouragement department immediately. 😂❤️'],
-  ['KEEP GOING','You have overcome so much already. You do not have to solve everything today. Just take the next small step.'],
-  ['YOU MATTER','You do not have to be strong every second. You are allowed to feel, to rest, and to let someone stand beside you.'],
-  ['THE MAN YOU ARE','I see your dedication to music, your dreams, your effort, and the heart you bring to what you do. Please do not overlook yourself.'],
-  ['ONE MORE THING','You are not alone. I see you — the real you. The man who tries, who feels, who overthinks, who carries so much and still shows up. ❤️']
-];
-let lastNote = -1;
-function drawNote() {
-  const jar = $('jar');
-  jar.classList.remove('shake');
-  void jar.offsetWidth;
-  jar.classList.add('shake');
-  let n;
-  do { n=Math.floor(Math.random()*jarNotes.length); } while (n===lastNote && jarNotes.length>1);
-  lastNote=n;
-  setTimeout(()=>{
-    $('jarText').textContent=jarNotes[n][1];
-    $('jarCategory').textContent=jarNotes[n][0];
-    $('jarNote').hidden=false;
-    heartBurst(window.innerWidth/2,window.innerHeight/2);
-  },220);
-}
+  // Bubble game
+  let bubbleScore = 0;
+  const bubbleField = $("#bubbleField");
+  const bubbleScoreEl = $("#bubbleScore");
+  const bubbleWords = ["✨", "♡", "Yay!", "🌟", "😊", "22"];
 
-/* Typewriter letter */
-const letterText = `Duncan, ❤️
+  function makeBubbles() {
+    bubbleField.innerHTML = "";
+    const width = bubbleField.clientWidth || 300;
+    const height = bubbleField.clientHeight || 300;
 
-I don't know if you always realize how much you mean to me, so I wanted to make you something that says it properly.
+    for (let i = 0; i < 12; i++) {
+      const bubble = document.createElement("button");
+      bubble.type = "button";
+      bubble.className = "bubble";
+      bubble.setAttribute("aria-label", "Pop bubble");
+      const size = 43 + Math.random() * 30;
+      bubble.style.width = size + "px";
+      bubble.style.height = size + "px";
+      bubble.style.left = Math.max(0, Math.random() * (width - size)) + "px";
+      bubble.style.top = Math.max(0, Math.random() * (height - size)) + "px";
+      bubble.style.animationDelay = Math.random() * 2 + "s";
+      bubble.textContent = bubbleWords[Math.floor(Math.random() * bubbleWords.length)];
+
+      bubble.addEventListener("click", () => {
+        bubbleScore++;
+        bubbleScoreEl.textContent = bubbleScore;
+        bubble.remove();
+
+        if (bubbleField.children.length === 0) {
+          const message = document.createElement("p");
+          message.textContent = "You popped them all! You're pretty good at this. 🤭";
+          message.style.cssText = "position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px;color:#e8c982;line-height:1.8";
+          bubbleField.appendChild(message);
+        }
+      });
+      bubbleField.appendChild(bubble);
+    }
+  }
+
+  $("#newBubbles").addEventListener("click", makeBubbles);
+
+  // Quiz
+  const questions = [
+    {
+      question: "Where did our little story begin?",
+      options: ["At church", "At the beach", "In a supermarket"],
+      answer: 0,
+      response: "Church! A little moment that became part of our story. ♡"
+    },
+    {
+      question: "Which equation is our iconic inside joke?",
+      options: ["1 + 1 = 2", "1 + 1 = 22", "2 + 2 = 4"],
+      answer: 1,
+      response: "ONE PLUS ONE EQUALS TWENTY-TWO! 😂❤️"
+    },
+    {
+      question: "What is this little website called?",
+      options: ["Forever", "The Kingdom", "22"],
+      answer: 2,
+      response: "22 — a little universe made especially for you. 🌌"
+    },
+    {
+      question: "What can you find in this little universe?",
+      options: ["Only a blank page", "Memories, music, games and encouragement", "A maths exam"],
+      answer: 1,
+      response: "Exactly! A little bit of everything, with care in every corner. 💌"
+    }
+  ];
+
+  let questionIndex = 0;
+  let quizScore = 0;
+  let answered = false;
+  const quizContent = $("#quizContent");
+  const quizFeedback = $("#quizFeedback");
+  const nextQuestion = $("#nextQuestion");
+  const restartQuiz = $("#restartQuiz");
+
+  function renderQuestion() {
+    answered = false;
+    quizFeedback.textContent = "";
+    nextQuestion.classList.add("hidden");
+    nextQuestion.textContent = "Next Question →";
+    restartQuiz.classList.add("hidden");
+
+    if (questionIndex >= questions.length) {
+      quizContent.innerHTML = "";
+      const result = document.createElement("div");
+      result.className = "section-heading";
+      const heading = document.createElement("h2");
+      heading.textContent = "Quiz Complete! ❤️";
+      const description = document.createElement("p");
+      description.textContent = "You scored " + quizScore + " out of " + questions.length +
+        ". The real prize is the memories we get to keep making.";
+      result.append(heading, description);
+      quizContent.appendChild(result);
+      restartQuiz.classList.remove("hidden");
+      return;
+    }
+
+    const q = questions[questionIndex];
+    quizContent.innerHTML = "";
+    const heading = document.createElement("h3");
+    heading.style.cssText = "font-weight:normal;font-size:21px;line-height:1.6";
+    heading.textContent = (questionIndex + 1) + ". " + q.question;
+    quizContent.appendChild(heading);
+
+    const options = document.createElement("div");
+    q.options.forEach((option, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "quiz-option";
+      button.textContent = option;
+      button.addEventListener("click", () => chooseAnswer(index, button));
+      options.appendChild(button);
+    });
+    quizContent.appendChild(options);
+  }
+
+  function chooseAnswer(index, chosenButton) {
+    if (answered) return;
+    answered = true;
+    const q = questions[questionIndex];
+
+    $$(".quiz-option", quizContent).forEach((button, i) => {
+      button.disabled = true;
+      if (i === q.answer) button.classList.add("correct");
+    });
+
+    if (index === q.answer) {
+      quizScore++;
+      quizFeedback.textContent = q.response;
+    } else {
+      chosenButton.classList.add("wrong");
+      quizFeedback.textContent = "Not quite! The answer is: " + q.options[q.answer] + ". ♡";
+    }
+
+    nextQuestion.classList.remove("hidden");
+    if (questionIndex === questions.length - 1) nextQuestion.textContent = "See My Score ✨";
+  }
+
+  nextQuestion.addEventListener("click", () => {
+    questionIndex++;
+    renderQuestion();
+  });
+
+  restartQuiz.addEventListener("click", () => {
+    questionIndex = 0;
+    quizScore = 0;
+    renderQuestion();
+  });
+
+  renderQuestion();
+
+  // Interactive constellation
+  const starMessages = [
+    "Your struggles don't cancel your worth. You matter even when things aren't going to plan.",
+    "You don't have to have every answer today. Take a breath and give yourself room to grow.",
+    "Resting isn't giving up. Sometimes a pause is part of moving forward.",
+    "You have more to offer this world than what you can earn or achieve.",
+    "You don't have to carry every worry alone. Let people stand beside you, too.",
+    "A difficult season is a chapter, not the whole story.",
+    "I hope you learn to see yourself with some of the kindness you give to people you care about.",
+    "You are allowed to begin again, at your own pace.",
+    "There is still so much ahead of you that this moment cannot show you yet."
+  ];
+
+  const constellation = $("#constellation");
+  starMessages.forEach((message, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "star";
+    const symbol = document.createElement("span");
+    button.textContent = "✦";
+    const label = document.createElement("span");
+    label.textContent = "Star " + (index + 1);
+    button.appendChild(label);
+
+    button.addEventListener("click", () => {
+      button.classList.add("revealed");
+      $("#starMessage").textContent = message;
+    });
+    constellation.appendChild(button);
+  });
+
+  // Motivation jar
+  const notes = [
+    "You are allowed to have difficult seasons without deciding that your whole story is a failure.",
+    "Your struggles don't cancel your worth.",
+    "You're not a failure for not having it all figured out.",
+    "Resting isn't giving up.",
+    "Asking for support doesn't make you less of a man.",
+    "You have overcome so much already.",
+    "Better days are still possible.",
+    "You don't have to carry everything alone.",
+    "Your value has never been a number in your account or a list of things you've accomplished.",
+    "You are still worthy on the days when you feel behind.",
+    "You can take a breath, regroup, and try again when you're ready.",
+    "A hard season is a chapter, not the whole story.",
+    "You matter beyond your setbacks, beyond the pressure, and beyond today's worries.",
+    "Keep going at your own pace. You don't need to solve everything all at once.",
+    "I hope you remember that someone sees you, believes in you, and wants good things for you.",
+    "Your story is still being written. Give yourself the time and kindness to see what comes next."
+  ];
+
+  let lastNote = -1;
+  function drawMotivationNote() {
+    let index = Math.floor(Math.random() * notes.length);
+    while (notes.length > 1 && index === lastNote) {
+      index = Math.floor(Math.random() * notes.length);
+    }
+    lastNote = index;
+    $("#motivationNote").textContent = notes[index];
+  }
+
+  $("#drawNote").addEventListener("click", drawMotivationNote);
+  $("#anotherNote").addEventListener("click", drawMotivationNote);
+
+  // Typewriter letter
+  const letter = `Duncan, ❤️
+
+I don't know if you always realise how much you mean to me, so I wanted to make you something that says it properly.
 
 I see the man who checks up on me, who wants to know I've reached safely, who can hear me out when something has hurt me and say sorry when he's wrong. I see the man who stayed with me on a night when grief felt too heavy, who gave me space to feel, and who has encouraged me on days when I wasn't okay. Those things might feel small to you, but they aren't small to me. I carry them in my heart.
 
@@ -610,60 +830,71 @@ You are not alone in this. You matter to me, more than I probably manage to say.
 With all my love,
 Your Darling ❤️`;
 
-let letterStarted=false, typingTimer=null, letterIndex=0;
-function openLetter() {
-  if (letterStarted) return;
-  letterStarted=true;
-  $('envelope').style.transform='translateY(-10px) rotate(-2deg) scale(.96)';
-  $('letterButtons').hidden=true;
-  $('letterPaper').hidden=false;
-  $('letterAfter').hidden=true;
-  $('letterIntro').textContent='A little patience, handsome. Let me say it properly. ❤️';
-  $('typedText').textContent='';
-  letterIndex=0;
-  typeLetter();
-}
-function typeLetter() {
-  clearTimeout(typingTimer);
-  if (letterIndex >= letterText.length) {
-    $('cursor').hidden=true;
-    $('letterAfter').hidden=false;
-    $('letterIntro').textContent='Every word, from my heart to yours. ❤️';
-    return;
-  }
-  $('typedText').textContent += letterText.charAt(letterIndex);
-  const ch=letterText.charAt(letterIndex++);
-  const paper=$('letterPaper');
-  paper.scrollTop=paper.scrollHeight;
-  let delay=27;
-  if (ch==='.' || ch==='!' || ch==='?') delay=330;
-  else if (ch===',' || ch==='—') delay=160;
-  else if (ch==='\n') delay=210;
-  typingTimer=setTimeout(typeLetter,delay);
-}
-function restartLetter() {
-  clearTimeout(typingTimer);
-  letterStarted=false;
-  $('letterPaper').hidden=true;
-  $('letterAfter').hidden=true;
-  $('letterButtons').hidden=false;
-  $('cursor').hidden=false;
-  $('envelope').style.transform='';
-  $('letterIntro').textContent='Tap the envelope when you are ready. ❤️';
-  $('typedText').textContent='';
-}
+  let typingTimer = null;
+  let letterStarted = false;
+  let letterPosition = 0;
 
-/* Ambient floating symbols */
-const floaties=$('floaties');
-function addFloaty() {
-  const el=document.createElement('span');
-  el.textContent=['♡','✦','♥','·'][Math.floor(Math.random()*4)];
-  el.style.cssText=`position:absolute;left:${Math.random()*100}%;bottom:-30px;color:${Math.random()>.5?'#f2d18a':'#f0a9c0'};font-size:${12+Math.random()*17}px;opacity:.5;transition:transform 9s linear,opacity 9s linear;`;
-  floaties.appendChild(el);
-  requestAnimationFrame(()=>{el.style.transform=`translateY(-${window.innerHeight+60}px) rotate(${Math.random()*140}deg)`;el.style.opacity='0';});
-  setTimeout(()=>el.remove(),9200);
-}
-setInterval(addFloaty,1000);
+  function stopTyping() {
+    if (typingTimer !== null) {
+      window.clearTimeout(typingTimer);
+      typingTimer = null;
+    }
+  }
+
+  function typeLetter() {
+    stopTyping();
+    letterPosition = 0;
+    $("#letterText").textContent = "";
+    $("#typeCursor").classList.remove("hidden");
+    $("#replayLetter").classList.add("hidden");
+
+    function typeNext() {
+      if (letterPosition >= letter.length) {
+        typingTimer = null;
+        $("#typeCursor").classList.add("hidden");
+        $("#replayLetter").classList.remove("hidden");
+        return;
+      }
+
+      $("#letterText").textContent += letter.charAt(letterPosition);
+      letterPosition++;
+      const character = letter.charAt(letterPosition - 1);
+      typingTimer = window.setTimeout(typeNext, character === "\n" ? 160 : (character === " " ? 24 : 34));
+    }
+
+    typeNext();
+  }
+
+  function openLetter() {
+    if (letterStarted) return;
+    letterStarted = true;
+    $("#envelope").classList.add("hidden");
+    $("#letterPaper").classList.remove("hidden");
+    typeLetter();
+  }
+
+  $("#openLetter").addEventListener("click", openLetter);
+  $("#replayLetter").addEventListener("click", typeLetter);
+
+  // Finish the letter if the visitor navigates away during typing.
+  document.addEventListener("click", event => {
+    const button = event.target.closest("[data-scene]");
+    if (button && button.dataset.scene !== "letter") {
+      stopTyping();
+      if (letterPosition < letter.length && letterStarted) {
+        $("#letterText").textContent = letter;
+        $("#typeCursor").classList.add("hidden");
+        $("#replayLetter").classList.remove("hidden");
+      }
+    }
+  });
+
+  // Keep the bubble game inside the field on screen resize.
+  window.addEventListener("resize", () => {
+    if ($("#bubbles").classList.contains("active")) makeBubbles();
+  });
+
+})();
 </script>
 </body>
 </html>
